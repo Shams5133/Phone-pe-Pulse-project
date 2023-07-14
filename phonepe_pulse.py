@@ -54,44 +54,7 @@ payment_category = {
 	"Financial Services":3,
 	"Others":4
 }
-# State_ID = {
-# 	'andaman & nicobar islands': 'AN',
-# 	'andhra pradesh' : 'AP',
-# 	'puducherry': 'PY',
-# 	'tamil nadu' : 'TN',
-# 	'uttar pradesh': 'UP',
-# 	'madhya pradesh' : 'MP',
-# 	'tripura': 'TR',
-# 	'lakshadweep' : 'LD',
-# 	'manipur' : 'MN',
-# 	'maharashtra' : 'MH',
-# 	'dadra & nagar haveli & daman & diu' : 'DD',
-# 	'meghalaya' : 'ML',
-# 	'haryana' : 'HR',
-# 	'rajasthan' : 'RJ',
-# 	'ladakh' : 'LA',
-# 	'punjab' : 'PB',
-# 	'assam' : 'AS',
-# 	'jharkhand': 'JH',
-# 	'odisha' : 'OR',
-# 	'bihar' : 'BR',
-# 	'kerala' : 'KL',
-# 	'karnataka': 'KA',
-# 	'chandigarh': 'CH',
-# 	'telangana' : 'TG',
-# 	'himachal pradesh': 'HP' ,
-# 	'west bengal' : 'WB',
-# 	'gujarat': 'GJ',
-# 	'sikkim': 'SK',
-# 	'nagaland': 'NL',
-# 	'mizoram': 'MZ',
-# 	'chhattisgarh': 'CT',
-# 	'jammu & kashmir': 'JK',
-# 	'goa': 'GA',
-# 	'arunachal pradesh': 'AR',
-# 	'delhi': 'DL',
-# 	'uttarakhand': 'UT',
-# }
+
 State_ID = {
 	'andaman & nicobar islands': 35,
 	'andhra pradesh' : 28,
@@ -396,21 +359,10 @@ def get_district_map_data():
 
 
 def show_map_data(data_option,year_option,quarter_option):
-	print(data_option,year_option,quarter_option)
 	sql_query = f"SELECT ID, {data_option}, State FROM State_map WHERE Quarter = {quarter_option} and Year = {year_option}"
-	# mysql_cursor.execute("""
-	#     SELECT  ID, `%s` ,State
-	#     FROM State_map
-	#     WHERE Quarter = %s and Year = %s
-	# """,
-	# (data_option,quarter_option,year_option) ) 
 	mysql_cursor.execute(sql_query) 
-	# for st in india['features']:
-	# 	st["ID"] = st["properties"]["state_code"]
-
 	results = mysql_cursor.fetchall()
 	df = pd.DataFrame(results,columns = ["ID",data_option,"Name"])
-	print(df)		
 	fig = px.choropleth(
 	    df,
 	    locations="ID",
@@ -441,9 +393,7 @@ def show_map_data(data_option,year_option,quarter_option):
                 autoexpand=True
             ),
             width=800,
-            # height=400,
     )
-	fig.update_traces(hoverinfo = "none")
 	st.plotly_chart(fig)
 
 def get_map_data():
